@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Studio — Résumé, CV &amp; Portfolio Website Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDF1F0;
+    --paper-deep:#CFD6D6;
+    --card:#F8FAF9;
+    --ink:#041420;
+    --ink-soft:#3E5457;
+    --ink-faint:#7C9291;
+    --red:#4B7273;
+    --red-dim:#AFC6C4;
+    --green:#2E7A6C;
+    --line:#C4CDCC;
+    --line-strong:#AAB7B6;
+    --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--red); color:var(--paper);}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  .display{font-family:'Fraunces',serif;}
+  .hand{font-family:'Caveat',cursive;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--red);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px; background:var(--red);
+    display:inline-block;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,244,236,.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:78px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces',serif; font-weight:600; font-size:19px;
+    letter-spacing:-.01em;
+    text-decoration:none;
+  }
+  .logo-mark{
+    width:30px; height:30px; border:1.5px solid var(--ink);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-size:13px; font-weight:600;
+    position:relative;
+  }
+  .logo-mark::after{
+    content:"";
+    position:absolute; width:38px; height:38px;
+    border:1.5px solid var(--red);
+    border-radius:50%;
+    top:-5px; left:-5px;
+    clip-path:polygon(0 0,45% 0,45% 8%,8% 8%,8% 100%,0 100%);
+  }
+  .nav-links{display:flex; align-items:center; gap:36px; list-style:none;}
+  .nav-links a{
+    font-size:14.5px; text-decoration:none; color:var(--ink-soft);
+    position:relative; padding:2px 0;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{
+    content:""; position:absolute; left:0; right:0; bottom:-4px; height:1px; background:var(--red);
+  }
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    padding:11px 22px; border-radius:2px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+    border:1.5px solid var(--ink); background:var(--ink); color:var(--paper);
+    cursor:pointer; transition:transform .15s ease, background .15s ease;
+  }
+  .btn:hover{background:var(--red); border-color:var(--red); transform:translateY(-1px);}
+  .btn.ghost{background:transparent; color:var(--ink); border-color:var(--ink);}
+  .btn.ghost:hover{background:var(--ink); color:var(--paper);}
+  @media (max-width:400px){
+    nav.wrap .btn{font-size:12px; padding:9px 14px;}
+  }
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer;}
+  @media (max-width:840px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 80px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;
+  }
+  @media (max-width:960px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .hero h1{
+    font-size:clamp(38px,5.4vw,64px);
+    font-weight:600;
+    line-height:1.04;
+    letter-spacing:-.015em;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:500; color:var(--red);
+  }
+  .hero p.lede{
+    font-size:17.5px; color:var(--ink-soft); max-width:46ch; margin-bottom:34px;
+  }
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .hero-note{
+    margin-top:26px; font-family:'JetBrains Mono',monospace; font-size:12px;
+    color:var(--ink-faint); letter-spacing:.02em;
+  }
+
+  /* document mockup */
+  .doc-stage{position:relative; display:flex; justify-content:center;}
+  .doc{
+    width:100%; max-width:400px;
+    background:var(--card);
+    border:1px solid var(--line-strong);
+    box-shadow:0 30px 60px -30px rgba(27,25,23,.35), 0 2px 0 var(--paper-deep);
+    padding:34px 30px 38px;
+    transform:rotate(-2.2deg);
+    position:relative;
+  }
+  .doc::before{
+    content:"";
+    position:absolute; inset:10px;
+    border:1px dashed var(--line);
+    pointer-events:none;
+  }
+  .doc-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px;}
+  .doc-name{width:58%;}
+  .bar{height:9px; background:var(--paper-deep); border-radius:1px;}
+  .bar.thick{height:15px;}
+  .bar + .bar{margin-top:8px;}
+  .doc-name .bar:first-child{width:78%; height:16px;}
+  .doc-name .bar:nth-child(2){width:52%;}
+  .doc-avatar{
+    width:46px; height:46px; border-radius:50%;
+    background:var(--paper-deep); border:1px solid var(--line-strong);
+  }
+  .doc-section-label{
+    font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-faint); margin:20px 0 10px;
+  }
+  .doc-lines .bar{width:100%;}
+  .doc-lines .bar:nth-child(2){width:88%;}
+  .doc-lines .bar:nth-child(3){width:64%;}
+  .doc-skills{display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;}
+  .doc-skills span{
+    display:block; width:64px; height:20px; background:var(--paper-deep); border-radius:10px;
+  }
+
+  .mark{position:absolute; pointer-events:none;}
+  .mark svg{overflow:visible;}
+  .mark path, .mark ellipse{
+    stroke-dasharray:400; stroke-dashoffset:400;
+    animation:draw 1.1s ease forwards;
+  }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+
+  .m-circle{top:26px; left:-6px; width:200px;}
+  .m-circle svg{animation-delay:.3s;}
+  .m-strike{top:118px; left:14px; width:190px;}
+  .m-note1{
+    top:100px; left:200px; font-family:'Caveat',cursive; font-weight:600;
+    color:var(--red); font-size:20px; transform:rotate(-4deg);
+  }
+  .m-arrow{top:210px; left:-30px; width:90px;}
+  .m-note2{
+    top:236px; left:-58px; font-family:'Caveat',cursive; font-weight:600;
+    color:var(--red); font-size:19px; transform:rotate(-3deg);
+  }
+  .m-stamp{
+    top:250px; right:-26px;
+    width:106px; height:106px; border-radius:50%;
+    border:2.5px solid var(--green); color:var(--green);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-family:'JetBrains Mono',monospace; font-weight:500; font-size:11.5px;
+    letter-spacing:.08em; text-transform:uppercase;
+    transform:rotate(9deg);
+    opacity:0; animation:stamp .35s ease forwards .9s;
+  }
+  @keyframes stamp{ from{opacity:0; transform:rotate(9deg) scale(1.6);} to{opacity:.92; transform:rotate(9deg) scale(1);} }
+  @media (max-width:960px){ .m-note2, .m-arrow{display:none;} .m-stamp{right:-4px;} }
+  @media (max-width:520px){ .doc{max-width:320px; padding:26px 22px 30px;} .m-circle{width:150px;} .m-note1{left:150px; font-size:17px;} .m-stamp{width:88px; height:88px; font-size:10px;} }
+
+  /* ---------- SECTION shared ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-head h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,3.6vw,40px);
+    letter-spacing:-.01em; margin-top:14px;
+  }
+  .section-head p{color:var(--ink-soft); margin-top:14px; font-size:16px; max-width:52ch;}
+  .rule{border:none; border-top:1px solid var(--line);}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--paper-deep);}
+  .service-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-strong); border:1px solid var(--line-strong);}
+  @media (max-width:820px){ .service-grid{grid-template-columns:1fr;} }
+  .service{background:var(--card); padding:38px 32px 34px; position:relative;}
+  .service .tab{
+    position:absolute; top:0; left:32px; transform:translateY(-50%);
+    background:var(--ink); color:var(--paper); font-family:'JetBrains Mono',monospace;
+    font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    padding:5px 10px;
+  }
+  .service h3{font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin:20px 0 12px;}
+  .service p{color:var(--ink-soft); font-size:14.8px; margin-bottom:22px;}
+  .service ul{list-style:none; font-size:14px; color:var(--ink-soft);}
+  .service li{padding:7px 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px;}
+  .service li:first-child{border-top:none;}
+  .service .price{
+    margin-top:24px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-faint);
+  }
+
+  /* ---------- PROCESS ---------- */
+  .process-list{display:flex; flex-direction:column;}
+  .process-row{
+    display:grid; grid-template-columns:90px 1fr 1fr; gap:24px;
+    padding:30px 0; border-top:1px solid var(--line); align-items:start;
+  }
+  .process-row:last-child{border-bottom:1px solid var(--line);}
+  @media (max-width:760px){ .process-row{grid-template-columns:56px 1fr;} .process-row .p-desc{grid-column:2;} }
+  .p-num{font-family:'JetBrains Mono',monospace; color:var(--red); font-size:14px; padding-top:4px;}
+  .p-title{font-family:'Fraunces',serif; font-weight:600; font-size:21px;}
+  .p-title span{display:block; font-family:'JetBrains Mono',monospace; font-weight:400; font-size:11px; color:var(--ink-faint); letter-spacing:.1em; text-transform:uppercase; margin-top:6px;}
+  .p-desc{color:var(--ink-soft); font-size:15px; padding-top:2px;}
+
+  /* ---------- WORK ---------- */
+  .work{background:var(--paper-deep);}
+  .work-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  @media (max-width:900px){ .work-grid{grid-template-columns:1fr;} }
+  .case{background:var(--card); border:1px solid var(--line-strong); padding:26px 24px 28px;}
+  .case-compare{display:flex; gap:14px; margin-bottom:20px;}
+  .case-col{flex:1; padding:10px 10px 12px; background:var(--paper);}
+  .case-col.before{opacity:.72;}
+  .case-col label{font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:8px;}
+  .doc-thumb{
+    width:100%; aspect-ratio:140/180; display:block;
+    box-shadow:0 8px 18px -10px rgba(4,20,32,.35);
+    transition:transform .2s ease;
+  }
+  .case-col.after .doc-thumb{transform:rotate(.6deg);}
+  .case:hover .doc-thumb{transform:translateY(-2px);}
+  .case h4{font-family:'Fraunces',serif; font-size:18px; font-weight:600; margin-bottom:8px;}
+  .case p{font-size:14px; color:var(--ink-soft); margin-bottom:14px;}
+  .case .stat{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--green);
+    border-top:1px solid var(--line); padding-top:12px;
+  }
+  .case .sample-link{
+    display:inline-block; margin-top:14px; font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ink);
+    padding-bottom:1px;
+  }
+  .case .sample-link:hover{color:var(--red); border-color:var(--red);}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .notes-wrap{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  @media (max-width:900px){ .notes-wrap{grid-template-columns:1fr;} }
+  .note{
+    background:var(--card); border:1px solid var(--line);
+    border-left:3px solid var(--red);
+    padding:26px 24px; position:relative;
+  }
+  .note p{font-size:15.5px; color:var(--ink);}
+  .note .who{margin-top:18px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-faint); letter-spacing:.03em;}
+  .note .mark-tag{
+    position:absolute; top:-11px; right:16px;
+    font-family:'Caveat',cursive; color:var(--red); font-size:18px; font-weight:600;
+    transform:rotate(-3deg);
+  }
+
+  .shots-label{
+    margin-top:56px; margin-bottom:28px; display:flex; align-items:center; gap:14px;
+  }
+  .shots-label span{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-faint); white-space:nowrap;
+  }
+  .shots-label::after{content:""; height:1px; background:var(--line); flex:1;}
+  .shots-grid{column-count:4; column-gap:22px;}
+  @media (max-width:900px){ .shots-grid{column-count:2;} }
+  @media (max-width:520px){ .shots-grid{column-count:1;} }
+  .shot-card{
+    break-inside:avoid; margin-bottom:22px;
+    background:var(--card); border:1px solid var(--line-strong);
+    padding:10px 10px 14px; box-shadow:0 14px 28px -18px rgba(4,20,32,.28);
+    transform:rotate(var(--r,-1.4deg));
+  }
+  .shot-card:nth-child(2n){ --r:1.6deg; }
+  .shot-card:nth-child(3n){ --r:-0.8deg; }
+  .shot-card:nth-child(4n){ --r:1deg; }
+  .shot-card img{width:100%; display:block; border-radius:1px;}
+  .shot-card .pin{
+    width:18px; height:18px; border-radius:50%;
+    background:var(--red); margin:-24px auto 8px;
+    box-shadow:0 3px 5px rgba(0,0,0,.25);
+    border:2px solid var(--paper);
+    position:relative; z-index:2;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--paper-deep);}
+  .about-grid{display:grid; grid-template-columns:.8fr 1.2fr; gap:56px; align-items:center;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about-figure{
+    aspect-ratio:4/5; background:var(--card); border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .about-figure .initials{
+    font-family:'Fraunces',serif; font-size:96px; font-weight:600; color:var(--ink);
+    opacity:.92;
+  }
+  .about-figure::after{
+    content:""; position:absolute; inset:14px; border:1px dashed var(--line-strong);
+  }
+  .about-copy p{color:var(--ink-soft); font-size:16.5px; margin-bottom:18px; max-width:56ch;}
+  .about-facts{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:30px;}
+  .fact b{display:block; font-family:'Fraunces',serif; font-size:30px; font-weight:600;}
+  .fact span{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint);}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact-list{list-style:none; margin-top:26px;}
+  .contact-list li{
+    display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid var(--line); font-size:15px;
+  }
+  .contact-list li:first-child{border-top:none;}
+  .contact-list a{text-decoration:none; color:var(--ink); font-weight:600;}
+  .contact-list a:hover{color:var(--red);}
+  .slip{
+    background:var(--card); border:1px solid var(--line-strong); padding:30px;
+  }
+  .slip .eyebrow{margin-bottom:16px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;}
+  .field input, .field select, .field textarea{
+    width:100%; border:none; border-bottom:1px solid var(--line-strong); background:transparent;
+    padding:9px 2px; font-family:'Inter',sans-serif; font-size:15px; color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none; border-bottom-color:var(--red);}
+  .field textarea{resize:vertical; min-height:70px;}
+
+  footer{border-top:1px solid var(--line); padding:34px 0;}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;}
+  .footer-row p{font-size:13px; color:var(--ink-faint);}
+  .footer-links{display:flex; gap:22px; list-style:none; font-size:13px;}
+  .footer-links a{text-decoration:none; color:var(--ink-faint);}
+  .footer-links a:hover{color:var(--red);}
+
+  @media (prefers-reduced-motion: reduce){
+    .mark path, .mark ellipse, .m-stamp{animation:none !important; stroke-dashoffset:0 !important; opacity:1 !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo"><span class="logo-mark">RS</span> Resume Studio</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">About</a></li>
+    </ul>
+    <a href="#contact" class="btn">Get Your Resumes Done Now!</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="doc-before" viewBox="0 0 140 180">
+    <rect x=".5" y=".5" width="139" height="179" fill="#F4F1E8" stroke="#C9C2AC"/>
+    <rect x="16" y="14" width="72" height="8" fill="#3B382F" opacity=".75"/>
+    <rect x="16" y="27" width="42" height="4" fill="#B9B29B"/>
+    <line x1="16" y1="39" x2="124" y2="39" stroke="#D9D2BB"/>
+    <rect x="16" y="49" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="56" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="63" width="88" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="70" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="77" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="84" width="66" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="96" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="103" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="110" width="58" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="122" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="129" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="136" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="143" width="78" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="155" width="108" height="3" fill="#CFC8B1"/>
+    <rect x="16" y="162" width="94" height="3" fill="#CFC8B1"/>
+  </symbol>
+
+  <symbol id="doc-after-teal" viewBox="0 0 140 180">
+    <rect x=".5" y=".5" width="139" height="179" fill="#F8FAF9" stroke="#AAB7B6"/>
+    <rect x="0" y="0" width="44" height="180" fill="#4B7273"/>
+    <circle cx="22" cy="26" r="12" fill="#F8FAF9" opacity=".85"/>
+    <rect x="10" y="46" width="24" height="4" fill="#F8FAF9" opacity=".75"/>
+    <rect x="10" y="54" width="24" height="4" fill="#F8FAF9" opacity=".5"/>
+    <rect x="10" y="70" width="24" height="3" fill="#F8FAF9" opacity=".5"/>
+    <rect x="10" y="77" width="24" height="3" fill="#F8FAF9" opacity=".5"/>
+    <rect x="10" y="84" width="17" height="3" fill="#F8FAF9" opacity=".5"/>
+    <rect x="10" y="100" width="24" height="3" fill="#F8FAF9" opacity=".35"/>
+    <rect x="10" y="107" width="24" height="3" fill="#F8FAF9" opacity=".35"/>
+    <rect x="10" y="114" width="17" height="3" fill="#F8FAF9" opacity=".35"/>
+    <rect x="54" y="14" width="72" height="9" fill="#041420"/>
+    <rect x="54" y="27" width="40" height="4" fill="#4B7273"/>
+    <rect x="54" y="42" width="20" height="4" fill="#041420" opacity=".8"/>
+    <line x1="54" y1="49" x2="126" y2="49" stroke="#AAB7B6"/>
+    <rect x="54" y="56" width="72" height="3" fill="#C4CDCC"/>
+    <rect x="54" y="63" width="60" height="3" fill="#C4CDCC"/>
+    <rect x="54" y="76" width="20" height="4" fill="#041420" opacity=".8"/>
+    <line x1="54" y1="83" x2="126" y2="83" stroke="#AAB7B6"/>
+    <rect x="54" y="90" width="72" height="3" fill="#C4CDCC"/>
+    <rect x="54" y="97" width="72" height="3" fill="#C4CDCC"/>
+    <rect x="54" y="104" width="50" height="3" fill="#C4CDCC"/>
+    <rect x="54" y="117" width="20" height="4" fill="#041420" opacity=".8"/>
+    <line x1="54" y1="124" x2="126" y2="124" stroke="#AAB7B6"/>
+    <rect x="54" y="131" width="20" height="10" rx="5" fill="#AFC6C4"/>
+    <rect x="78" y="131" width="20" height="10" rx="5" fill="#AFC6C4"/>
+    <rect x="102" y="131" width="20" height="10" rx="5" fill="#AFC6C4"/>
+    <rect x="54" y="145" width="20" height="10" rx="5" fill="#AFC6C4"/>
+    <rect x="78" y="145" width="26" height="10" rx="5" fill="#AFC6C4"/>
+  </symbol>
+
+  <symbol id="doc-after-ink" viewBox="0 0 140 180">
+    <rect x=".5" y=".5" width="139" height="179" fill="#F8FAF9" stroke="#AAB7B6"/>
+    <rect x="0" y="0" width="140" height="30" fill="#041420"/>
+    <rect x="16" y="10" width="66" height="9" fill="#F8FAF9"/>
+    <circle cx="118" cy="15" r="10" fill="#2E7A6C"/>
+    <rect x="16" y="40" width="30" height="4" fill="#041420" opacity=".85"/>
+    <line x1="16" y1="47" x2="124" y2="47" stroke="#AAB7B6"/>
+    <rect x="16" y="54" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="61" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="68" width="80" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="80" width="30" height="4" fill="#041420" opacity=".85"/>
+    <line x1="16" y1="87" x2="124" y2="87" stroke="#AAB7B6"/>
+    <rect x="16" y="94" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="101" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="108" width="60" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="120" width="30" height="4" fill="#041420" opacity=".85"/>
+    <line x1="16" y1="127" x2="124" y2="127" stroke="#AAB7B6"/>
+    <rect x="16" y="134" width="18" height="10" rx="5" fill="#2E7A6C" opacity=".8"/>
+    <rect x="38" y="134" width="24" height="10" rx="5" fill="#2E7A6C" opacity=".8"/>
+    <rect x="66" y="134" width="18" height="10" rx="5" fill="#2E7A6C" opacity=".8"/>
+    <rect x="16" y="148" width="26" height="10" rx="5" fill="#2E7A6C" opacity=".8"/>
+    <rect x="46" y="148" width="18" height="10" rx="5" fill="#2E7A6C" opacity=".8"/>
+  </symbol>
+
+  <symbol id="doc-after-mint" viewBox="0 0 140 180">
+    <rect x=".5" y=".5" width="139" height="179" fill="#F8FAF9" stroke="#AAB7B6"/>
+    <rect x="0" y="0" width="140" height="46" fill="#AFC6C4"/>
+    <circle cx="26" cy="23" r="14" fill="#F8FAF9"/>
+    <rect x="50" y="15" width="64" height="8" fill="#041420"/>
+    <rect x="50" y="27" width="40" height="4" fill="#041420" opacity=".7"/>
+    <rect x="16" y="58" width="24" height="4" fill="#041420" opacity=".85"/>
+    <line x1="16" y1="65" x2="124" y2="65" stroke="#AAB7B6"/>
+    <rect x="16" y="72" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="79" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="86" width="70" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="98" width="24" height="4" fill="#041420" opacity=".85"/>
+    <line x1="16" y1="105" x2="124" y2="105" stroke="#AAB7B6"/>
+    <rect x="16" y="112" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="119" width="108" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="126" width="90" height="3" fill="#C4CDCC"/>
+    <rect x="16" y="138" width="24" height="4" fill="#041420" opacity=".85"/>
+    <line x1="16" y1="145" x2="124" y2="145" stroke="#AAB7B6"/>
+    <rect x="16" y="152" width="20" height="10" rx="5" fill="#4B7273"/>
+    <rect x="40" y="152" width="26" height="10" rx="5" fill="#4B7273"/>
+    <rect x="70" y="152" width="20" height="10" rx="5" fill="#4B7273"/>
+  </symbol>
+</defs>
+</svg>
+
+
+  <!-- HERO -->
+  <section class="hero wrap" style="padding-top:64px;">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Résumé · CV · Portfolio Studio</span>
+        <h1>Turn <em>overlooked</em><br>into undeniable.</h1>
+        <p class="lede">We rewrite and design résumés, academic CVs, and portfolio websites for people who are good at their work and tired of watching it get skipped in six seconds.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn">Get Your Resumes Done Now!</a>
+          <a href="#work" class="btn ghost">See the edits</a>
+        </div>
+      </div>
+
+      <div class="doc-stage">
+        <div class="doc">
+          <div class="doc-head">
+            <div class="doc-name">
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+            <div class="doc-avatar"></div>
+          </div>
+
+          <div class="doc-section-label">Summary</div>
+          <div class="doc-lines">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+
+          <div class="doc-section-label">Experience</div>
+          <div class="doc-lines">
+            <div class="bar thick"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+
+          <div class="doc-section-label">Skills</div>
+          <div class="doc-skills">
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <!-- annotation marks -->
+          <div class="mark m-circle">
+            <svg viewBox="0 0 200 46" width="200" height="46" fill="none">
+              <ellipse cx="100" cy="23" rx="96" ry="18" stroke="#C1402A" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="mark m-strike">
+            <svg viewBox="0 0 190 12" width="190" height="12">
+              <path d="M2 6 L188 6" stroke="#C1402A" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="mark m-note1">stronger verb →</div>
+          <div class="mark m-arrow">
+            <svg viewBox="0 0 90 60" width="90" height="60" fill="none">
+              <path d="M84 4 C 40 4, 10 30, 8 54" stroke="#C1402A" stroke-width="2.2"/>
+              <path d="M2 46 L8 56 L18 50" stroke="#C1402A" stroke-width="2.2" fill="none"/>
+            </svg>
+          </div>
+          <div class="mark m-note2">move this up</div>
+          <div class="mark m-stamp">Approved<br>for send</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">What we make</span>
+        <h2>Three documents. One job — get you the interview.</h2>
+        <p>Every project starts with the same question: what does the reader need to believe about you in the first fifteen seconds?</p>
+      </div>
+
+      <div class="service-grid">
+        <div class="service">
+          <span class="tab">Doc. 01</span>
+          <h3>Résumé</h3>
+          <p>A one-to-two-page résumé rebuilt around outcomes, not duties — tuned for the roles you're actually applying to.</p>
+          <ul>
+            <li><span>Full rewrite &amp; redesign</span><span>—</span></li>
+            <li><span>ATS-safe formatting</span><span>—</span></li>
+            <li><span>2 rounds of revisions</span><span>—</span></li>
+          </ul>
+          <div class="price">₹100–200 · 1–2 day turnaround</div>
+        </div>
+
+        <div class="service">
+          <span class="tab">Doc. 02</span>
+          <h3>Academic CV</h3>
+          <p>Publications, grants, teaching, and committee work organized so a search committee can find what it's looking for.</p>
+          <ul>
+            <li><span>Full rewrite &amp; redesign</span><span>—</span></li>
+            <li><span>Field-specific structure</span><span>—</span></li>
+            <li><span>2 rounds of revisions</span><span>—</span></li>
+          </ul>
+          <div class="price">₹100–200 · 1–2 day turnaround</div>
+        </div>
+
+        <div class="service">
+          <span class="tab">Doc. 03</span>
+          <h3>Portfolio site</h3>
+          <p>A fast, one-page site that shows the work itself — built, written, and shipped with a domain of your own.</p>
+          <ul>
+            <li><span>Custom design &amp; build</span><span>—</span></li>
+            <li><span>Copy included</span><span>—</span></li>
+            <li><span>1 round of revisions</span><span>—</span></li>
+          </ul>
+          <div class="price">₹100–200 · 1–2 day turnaround</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">How it runs</span>
+      <h2>Four steps. Under two days, start to finish.</h2>
+      <p>Everything happens async unless you want a call. You'll always know which draft you're looking at and what changed.</p>
+    </div>
+
+    <div class="process-list">
+      <div class="process-row">
+        <div class="p-num">01</div>
+        <div class="p-title">Intake<span>30 min, written or call</span></div>
+        <div class="p-desc">You send what you have — old résumé, job posts you're targeting, LinkedIn. We ask the annoying questions now so we don't have to later.</div>
+      </div>
+      <div class="process-row">
+        <div class="p-num">02</div>
+        <div class="p-title">First draft<span>Ready in 1 hour</span></div>
+        <div class="p-desc">A full rewrite, not a polish. You'll see new framing and structure within the hour — not days.</div>
+      </div>
+      <div class="process-row">
+        <div class="p-num">03</div>
+        <div class="p-title">Markup &amp; revise<span>Updated immediately</span></div>
+        <div class="p-desc">Send your required changes and we update on the spot — no waiting a day for a turnaround.</div>
+      </div>
+      <div class="process-row">
+        <div class="p-num">04</div>
+        <div class="p-title">Final proof<span>Within 2 days, max</span></div>
+        <div class="p-desc">Clean files, every format you need — PDF, editable source, and ATS plain-text — all requirements met within 2 days maximum.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="work">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Recent edits</span>
+        <h2>Before the edit. After the edit.</h2>
+        <p>Details changed to protect client privacy — the structure and results are real. Browse the full library of sample résumés on <a href="https://github.com/resumestudiohq" target="_blank" rel="noopener" style="color:var(--red); font-weight:600; text-decoration:underline;">GitHub →</a></p>
+      </div>
+
+      <div class="work-grid">
+        <div class="case">
+          <div class="case-compare">
+            <div class="case-col before">
+              <label>Before</label>
+              <svg class="doc-thumb"><use href="#doc-before"></use></svg>
+            </div>
+            <div class="case-col after">
+              <label>After</label>
+              <svg class="doc-thumb"><use href="#doc-after-teal"></use></svg>
+            </div>
+          </div>
+          <h4>Business admin fresher, MBA</h4>
+          <p>Built a first résumé for an MBA student — academic highlights, technical skills, and certifications ordered around what a recruiter scans for first.</p>
+          <div class="stat">→ Clean, single-column ATS layout</div>
+          <a class="sample-link" href="samples/mba-fresher-business-admin-sample.pdf" target="_blank" rel="noopener">View sample (PDF) →</a>
+        </div>
+
+        <div class="case">
+          <div class="case-compare">
+            <div class="case-col before">
+              <label>Before</label>
+              <svg class="doc-thumb"><use href="#doc-before"></use></svg>
+            </div>
+            <div class="case-col after">
+              <label>After</label>
+              <svg class="doc-thumb"><use href="#doc-after-ink"></use></svg>
+            </div>
+          </div>
+          <h4>HSE &amp; fire safety officer, 4+ yrs</h4>
+          <p>Restructured a technical safety résumé — certifications, on-the-job impact, and core competencies pulled to the front for fast scanning.</p>
+          <div class="stat">→ Built for recruiters and site auditors alike</div>
+          <a class="sample-link" href="samples/hse-fire-safety-officer-sample.pdf" target="_blank" rel="noopener">View sample (PDF) →</a>
+        </div>
+
+        <div class="case">
+          <div class="case-compare">
+            <div class="case-col before">
+              <label>Before</label>
+              <svg class="doc-thumb"><use href="#doc-before"></use></svg>
+            </div>
+            <div class="case-col after">
+              <label>After</label>
+              <svg class="doc-thumb"><use href="#doc-after-mint"></use></svg>
+            </div>
+          </div>
+          <h4>Finance &amp; marketing MBA graduate</h4>
+          <p>Organized four internships into a single clear narrative for Accounts Payable, Financial Analysis, and Finance Operations roles.</p>
+          <div class="stat">→ Internship timeline recruiters can scan fast</div>
+          <a class="sample-link" href="samples/finance-marketing-mba-sample.pdf" target="_blank" rel="noopener">View sample (PDF) →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">In the margins</span>
+      <h2>What clients wrote back.</h2>
+    </div>
+    <div class="notes-wrap">
+      <div class="note">
+        <span class="mark-tag">yes, this</span>
+        <p>"I'd rewritten this résumé four times myself. Resume Studio found the version of my career I couldn't see because I'd lived it."</p>
+        <div class="who">— Operations lead, series B startup</div>
+      </div>
+      <div class="note">
+        <span class="mark-tag">exactly</span>
+        <p>"The CV finally reads like thirty seconds of me, not eight years of chronology. Two committees told me it was the clearest one in the pile."</p>
+        <div class="who">— Postdoctoral researcher</div>
+      </div>
+      <div class="note">
+        <span class="mark-tag">worth it</span>
+        <p>"The portfolio site did in one page what I'd been trying to explain in every cover letter. Paid for itself with the first client it brought in."</p>
+        <div class="who">— Independent designer</div>
+      </div>
+    </div>
+
+    <div class="shots-label"><span>Straight from the chat</span></div>
+    <div class="shots-grid">
+      <div class="shot-card"><div class="pin"></div><img src="testimonials/testimonial-1.png" alt="Client message praising the modern, premium résumé design and on-time delivery"></div>
+      <div class="shot-card"><div class="pin"></div><img src="testimonials/testimonial-4.png" alt="Client message thanking the studio for support and guidance on their résumé"></div>
+      <div class="shot-card"><div class="pin"></div><img src="testimonials/testimonial-2.png" alt="Client message calling the finished CV professional and well arranged"></div>
+      <div class="shot-card"><div class="pin"></div><img src="testimonials/testimonial-3.png" alt="Client message thanking the studio for fast, quick turnaround"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="wrap about-grid">
+      <div class="about-figure"><span class="initials">RS</span></div>
+      <div class="about-copy">
+        <span class="eyebrow">About</span>
+        <h2 class="display" style="font-size:clamp(26px,3.2vw,34px); font-weight:600; margin:16px 0 20px;">We used to sit on the other side of the table.</h2>
+        <p>Our team has read résumés for a living — as recruiters and hiring managers before this. We've seen what makes a reviewer keep reading and what makes them move to the next tab, and we build that into every document we touch.</p>
+        <p>We work with a small number of clients at a time — engineers, researchers, designers, and people changing fields entirely — and write, design, and build every piece in-house.</p>
+        <div class="about-facts">
+          <div class="fact"><b>240+</b><span>Résumés rewritten</span></div>
+          <div class="fact"><b>9</b><span>Years in hiring &amp; design</span></div>
+          <div class="fact"><b>92%</b><span>Return or refer a friend</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="wrap">
+    <div class="contact-grid">
+      <div>
+        <span class="eyebrow">Get in touch</span>
+        <h2 class="display" style="font-size:clamp(28px,3.6vw,40px); font-weight:600; margin:16px 0 10px;">Tell me what's not landing.</h2>
+        <p style="color:var(--ink-soft); max-width:44ch;">Send a few lines about where you're stuck, and we'll reply within a day with next steps and timing.</p>
+        <ul class="contact-list">
+          <li><span>Email</span><a href="mailto:hello@resumestudiohq.com">hello@resumestudiohq.com</a></li>
+          <li><span>Instagram</span><a href="https://www.instagram.com/resumestudiohq/" target="_blank" rel="noopener">@resumestudiohq</a></li>
+          <li><span>Sample work</span><a href="https://github.com/resumestudiohq" target="_blank" rel="noopener">github.com/resumestudiohq</a></li>
+          <li><span>Booking</span><a href="#">Check current availability</a></li>
+          <li><span>Based in</span><span>Remote · works with clients worldwide</span></li>
+        </ul>
+      </div>
+
+      <form class="slip" id="intake-form">
+        <span class="eyebrow">Project intake</span>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" type="text" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" required>
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp number</label>
+          <input id="whatsapp" type="tel" placeholder="+91 XXXXX XXXXX" required>
+        </div>
+        <div class="field">
+          <label for="doc">What do you need</label>
+          <select id="doc">
+            <option>Résumé</option>
+            <option>Academic CV</option>
+            <option>Portfolio site</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="resume-file">Upload your current résumé (PDF)</label>
+          <input id="resume-file" type="file" accept=".pdf,application/pdf">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.5;">
+            Your email app will open with everything pre-filled — just attach this file before hitting send.
+          </div>
+        </div>
+        <button type="submit" class="btn" style="width:100%; justify-content:center; margin-top:6px;">Send intake form</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('intake-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var whatsapp = document.getElementById('whatsapp').value;
+      var doc = document.getElementById('doc').value;
+      var fileInput = document.getElementById('resume-file');
+      var fileName = fileInput.files.length ? fileInput.files[0].name : '(no file selected)';
+
+      var subject = 'Project intake — ' + name;
+      var body =
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'WhatsApp number: ' + whatsapp + '\n' +
+        'What they need: ' + doc + '\n' +
+        'Résumé file: ' + fileName + ' (attach before sending)';
+
+      var mailto = 'mailto:wresume439@gmail.com'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+
+      if (fileInput.files.length) {
+        window.alert('Your email app will open next.\n\nPlease attach "' + fileName + '" to the email before hitting send — browsers don\'t allow websites to attach files automatically.');
+      }
+
+      window.location.href = mailto;
+      this.querySelector('.btn').textContent = 'Opening your email app…';
+    });
+  </script>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <p>© 2026 Resume Studio — Résumé, CV &amp; Portfolio Website Studio.</p>
+    <ul class="footer-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>
