@@ -8,17 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#EDF1F0;
-    --paper-deep:#CFD6D6;
-    --card:#F8FAF9;
-    --ink:#041420;
-    --ink-soft:#3E5457;
-    --ink-faint:#7C9291;
-    --red:#4B7273;
-    --red-dim:#AFC6C4;
-    --green:#2E7A6C;
-    --line:#C4CDCC;
-    --line-strong:#AAB7B6;
+    --paper:#0B1A20;
+    --paper-deep:#1E363C;
+    --card:#16282E;
+    --ink:#EAF0EE;
+    --ink-soft:#9FB4B1;
+    --ink-faint:#5E7774;
+    --red:#5FB8AA;
+    --red-dim:#2C4A46;
+    --green:#48C9A8;
+    --line:#254046;
+    --line-strong:#33525A;
     --radius:2px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -58,7 +58,7 @@
   /* ---------- NAV ---------- */
   header{
     position:sticky; top:0; z-index:50;
-    background:rgba(247,244,236,.88);
+    background:rgba(11,26,32,.86);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
@@ -151,7 +151,7 @@
     width:100%; max-width:400px;
     background:var(--card);
     border:1px solid var(--line-strong);
-    box-shadow:0 30px 60px -30px rgba(27,25,23,.35), 0 2px 0 var(--paper-deep);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.55), 0 2px 0 var(--paper-deep);
     padding:34px 30px 38px;
     transform:rotate(-2.2deg);
     position:relative;
@@ -273,7 +273,7 @@
   .case-col label{font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:8px;}
   .doc-thumb{
     width:100%; aspect-ratio:140/180; display:block;
-    box-shadow:0 8px 18px -10px rgba(4,20,32,.35);
+    box-shadow:0 8px 18px -10px rgba(0,0,0,.55);
     transition:transform .2s ease;
   }
   .case-col.after .doc-thumb{transform:rotate(.6deg);}
@@ -321,7 +321,7 @@
   .shot-card{
     break-inside:avoid; margin-bottom:22px;
     background:var(--card); border:1px solid var(--line-strong);
-    padding:10px 10px 14px; box-shadow:0 14px 28px -18px rgba(4,20,32,.28);
+    padding:10px 10px 14px; box-shadow:0 14px 28px -18px rgba(0,0,0,.6);
     transform:rotate(var(--r,-1.4deg));
   }
   .shot-card:nth-child(2n){ --r:1.6deg; }
@@ -559,19 +559,19 @@
           <!-- annotation marks -->
           <div class="mark m-circle">
             <svg viewBox="0 0 200 46" width="200" height="46" fill="none">
-              <ellipse cx="100" cy="23" rx="96" ry="18" stroke="#C1402A" stroke-width="2.5"/>
+              <ellipse cx="100" cy="23" rx="96" ry="18" stroke="#5FB8AA" stroke-width="2.5"/>
             </svg>
           </div>
           <div class="mark m-strike">
             <svg viewBox="0 0 190 12" width="190" height="12">
-              <path d="M2 6 L188 6" stroke="#C1402A" stroke-width="2.5"/>
+              <path d="M2 6 L188 6" stroke="#5FB8AA" stroke-width="2.5"/>
             </svg>
           </div>
           <div class="mark m-note1">stronger verb →</div>
           <div class="mark m-arrow">
             <svg viewBox="0 0 90 60" width="90" height="60" fill="none">
-              <path d="M84 4 C 40 4, 10 30, 8 54" stroke="#C1402A" stroke-width="2.2"/>
-              <path d="M2 46 L8 56 L18 50" stroke="#C1402A" stroke-width="2.2" fill="none"/>
+              <path d="M84 4 C 40 4, 10 30, 8 54" stroke="#5FB8AA" stroke-width="2.2"/>
+              <path d="M2 46 L8 56 L18 50" stroke="#5FB8AA" stroke-width="2.2" fill="none"/>
             </svg>
           </div>
           <div class="mark m-note2">move this up</div>
